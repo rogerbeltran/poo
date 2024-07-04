@@ -16,10 +16,14 @@ public class TestController {
     @GetMapping("/hello")
     public String hello(@RequestParam String name,
                         @RequestParam String lastname,
-                        @RequestParam int age){
-
-        return "This is my first SpringBootProject!" +
-                ", and my name is: "+ name + " " + lastname + " and my age is: " + age + " years old";
+                        @RequestParam(required = false) Integer age) {
+        String message = "This is my first SpringBootProject!" +
+                ", and my name is: " + name + " " + lastname;
+        if (age != null) {
+            return message + " and my age is: " + age + " years old";
+        }else{
+            return message;
+        }
     }
 
     @GetMapping("/concat/{name}/{lastname}/{age}")
