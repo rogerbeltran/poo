@@ -65,6 +65,18 @@ public class PersonService {
         return per;
     }
 
+    private int findIndex(String id){
+        int indexFound = -1;
+        int index = 0;
+        for(Person p : personList){
+            if(id.equalsIgnoreCase(p.getId())){
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
     public String deletePersonById(String id) {
         String message = "Person with id" + id;
         for (Person per : personList) {
