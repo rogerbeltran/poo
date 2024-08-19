@@ -26,6 +26,8 @@ public class BootStrapData implements CommandLineRunner {
         p2.setPersonId("0987311633");
         p2.setName("Sandra");
         p2.setLastName("Olivares");
+        p2.setAge(42);
+
         p2.setAge(39);
 
         personRepository.save(p1);
