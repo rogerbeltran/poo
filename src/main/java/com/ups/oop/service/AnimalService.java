@@ -1,6 +1,6 @@
 package com.ups.oop.service;
 
-import com.ups.oop.dto.Animal;
+import com.ups.oop.dto.AnimalDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,15 +10,15 @@ import java.util.List;
 
 @Service
 public class AnimalService {
-    private List<Animal> AnimalList = new ArrayList<>();
+    private List<AnimalDTO> AnimalList = new ArrayList<>();
 
-    public ResponseEntity createAnimal(Animal animal) {
+    public ResponseEntity createAnimal(AnimalDTO animal) {
         String animalId = animal.getId();
         boolean wasFound = findAnimal (animalId);
         if(wasFound){
-            String errorMessage = "Animal with id " + animalId + " already exist";
+            String errorMessage = "Animal with id " + animalId + " already exists";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Animal with id " + animal.getId() + " already exist");
+                    .body("Animal with id " + animal.getId() + " already exists");
         } else {
             AnimalList.add(animal);
             return ResponseEntity.status(HttpStatus.OK).body(animal);
@@ -26,7 +26,7 @@ public class AnimalService {
     }
 
     private boolean findAnimal(String id){
-        for(Animal animal: AnimalList) {
+        for(AnimalDTO animal: AnimalList) {
             if (id.equalsIgnoreCase(animal.getId())) {
                 return true;
             }
@@ -43,7 +43,7 @@ public class AnimalService {
     }
 
     public ResponseEntity getAnimalById(String id) {
-        for(Animal ani : AnimalList){
+        for(AnimalDTO ani : AnimalList){
             if(id.equalsIgnoreCase(ani.getId())){
                 return ResponseEntity.status(HttpStatus.OK).body(ani);
             }
@@ -52,10 +52,10 @@ public class AnimalService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
     }
 
-    public Animal updateAnimal(String id, Animal animal){
-        Animal ani = new Animal();
+    public AnimalDTO updateAnimal(String id, AnimalDTO animal){
+        AnimalDTO ani = new AnimalDTO();
         int index = 0;
-        for(Animal anim : AnimalList){
+        for(AnimalDTO anim : AnimalList){
             if(id.equalsIgnoreCase(anim.getId())){
                 AnimalList.set(index, animal);
                 return animal;
@@ -68,7 +68,7 @@ public class AnimalService {
     private int findIndex(String id){
         int indexFound = -1;
         int index = 0;
-        for(Animal a : AnimalList){
+        for(AnimalDTO a : AnimalList){
             if(id.equalsIgnoreCase(a.getId())){
                 return index;
             }
@@ -78,11 +78,11 @@ public class AnimalService {
     }
 
     public String deleteAnimal(String id) {
-        String message = "animal with id " + id;
-        for (Animal ani : AnimalList) {
+        String message = "Animal with id " + id;
+        for (AnimalDTO ani : AnimalList) {
             if (id.equalsIgnoreCase(ani.getId())) {
                 AnimalList.remove(ani);
-                return message + " removed successfully";
+                return message + " Removed successfully";
             }
         }
         return message + " not found";

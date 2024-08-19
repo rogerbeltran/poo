@@ -1,6 +1,6 @@
 package com.ups.oop.service;
 
-import com.ups.oop.dto.Person;
+import com.ups.oop.dto.PersonDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,9 +10,9 @@ import java.util.List;
 
 @Service
 public class PersonService {
-    private List<Person> personList = new ArrayList<>();
+    private List<PersonDTO> personList = new ArrayList<>();
 
-    public ResponseEntity createPerson(Person person) {
+    public ResponseEntity createPerson(PersonDTO person) {
         String personId = person.getId();
         boolean wasFound = findPerson(personId);
         if(wasFound){
@@ -26,7 +26,7 @@ public class PersonService {
     }
 
     private boolean findPerson(String id){
-        for(Person person: personList) {
+        for(PersonDTO person: personList) {
             if (id.equalsIgnoreCase(person.getId())) {
                 return true;
             }
@@ -43,7 +43,7 @@ public class PersonService {
     }
 
     public ResponseEntity getPersonById(String id) {
-        for(Person per : personList){
+        for(PersonDTO per : personList){
             if(id.equalsIgnoreCase(per.getId())){
                 return ResponseEntity.status(HttpStatus.OK).body(per);
             }
@@ -52,10 +52,10 @@ public class PersonService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
     }
 
-    public Person updatePerson(String id, Person person){
-        Person per = new Person();
+    public PersonDTO updatePerson(String id, PersonDTO person){
+        PersonDTO per = new PersonDTO();
         int index = 0;
-        for(Person pers : personList){
+        for(PersonDTO pers : personList){
             if(id.equalsIgnoreCase(pers.getId())){
                 personList.set(index, person);
                 return person;
@@ -68,7 +68,7 @@ public class PersonService {
     private int findIndex(String id){
         int indexFound = -1;
         int index = 0;
-        for(Person p : personList){
+        for(PersonDTO p : personList){
             if(id.equalsIgnoreCase(p.getId())){
                 return index;
             }
@@ -79,7 +79,7 @@ public class PersonService {
 
     public String deletePersonById(String id) {
         String message = "Person with id" + id;
-        for (Person per : personList) {
+        for (PersonDTO per : personList) {
             if (id.equalsIgnoreCase(per.getId())) {
                 personList.remove(per);
                 return message + " Removed successfully";
