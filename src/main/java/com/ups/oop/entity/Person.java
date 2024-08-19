@@ -1,4 +1,4 @@
-package com.ups.oop.entity;
+package com.ups.oop.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
