@@ -56,7 +56,7 @@ public class BootStrapData implements CommandLineRunner {
 
         animalRepository.save(a1);
         animalRepository.save(a2);
-        
+
         System.out.println("--------------Started BootstrapData -------------");
         System.out.println("Number of Persons: " + personRepository.count());
         System.out.println("Number of Animals: " + animalRepository.count());
