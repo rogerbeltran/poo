@@ -44,24 +44,37 @@ public class BootStrapData implements CommandLineRunner {
         personRepository.save(pe2);
         personRepository.save(pe3);
 
-        Animal a1 = new Animal();
-        a1.setName("Lady");
-        a1.setColor("Brown");
-        a1.setLenght(1.40);
-        a1.setBreed("Golden Retriever");
-        a1.setHeight(0.60);
-        a1.setWeight(12);
 
-        Animal a2 = new Animal();
-        a2.setName("Max");
-        a2.setColor("White");
-        a2.setLenght(0.50);
-        a2.setBreed("Puddle");
-        a2.setHeight(0.45);
-        a2.setWeight(6);
+        Animal ani1 = new Animal();
+        ani1.setPetName("Lady");
+        ani1.setName("Golden");
+        ani1.setBreed("Retriever");
+        ani1.setColor("Brown");
+        ani1.setLength(1.45);
+        ani1.setHeight(0.70);
+        ani1.setWeight(12);
 
-        animalRepository.save(a1);
-        animalRepository.save(a2);
+        Animal ani2 = new Animal();
+        ani2.setPetName("Max");
+        ani2.setName("French");
+        ani2.setBreed("Puddle");
+        ani2.setColor("White");
+        ani2.setLength(0.90);
+        ani2.setHeight(0.25);
+        ani2.setWeight(6);
+
+        Animal ani3 = new Animal();
+        ani3.setPetName("June");
+        ani3.setName("Siberian");
+        ani3.setBreed("Husky");
+        ani3.setColor("Gray");
+        ani3.setLength(1.40);
+        ani3.setHeight(0.50);
+        ani3.setWeight(15);
+
+        animalRepository.save(ani1);
+        animalRepository.save(ani2);
+        animalRepository.save(ani3);
 
         System.out.println("--------------Started BootstrapData -------------");
         System.out.println("Number of Persons: " + personRepository.count());

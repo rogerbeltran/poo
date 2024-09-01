@@ -17,10 +17,11 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private double lenght;
+    private String petName;
+    private String name;
+    private double length;
     private double height;
     private double weight;
     private String color;
     private String breed;
-    private String name;
 }

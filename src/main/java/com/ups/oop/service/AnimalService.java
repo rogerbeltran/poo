@@ -16,8 +16,8 @@ import java.util.Optional;
 
 @Service
 public class AnimalService {
-    private List<AnimalDTO> AnimalList = new ArrayList<>();
     private final AnimalRepository animalRepository;
+    private List<AnimalDTO> animalDTOList = new ArrayList<>();
 
     public AnimalService(AnimalRepository animalRepository) {
         this.animalRepository = animalRepository;
@@ -31,13 +31,13 @@ public class AnimalService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Animal with id " + animal.getId() + " already exists");
         } else {
-            AnimalList.add(animal);
+            animalDTOList.add(animal);
             return ResponseEntity.status(HttpStatus.OK).body(animal);
         }
     }
 
     private boolean findAnimal(String id) {
-        for (AnimalDTO animal : AnimalList) {
+        for (AnimalDTO animal : animalDTOList) {
             if (id.equalsIgnoreCase(animal.getId())) {
                 return true;
             }
@@ -47,35 +47,43 @@ public class AnimalService {
 
 
     public ResponseEntity getAllAnimal() {
+        List<AnimalDTO> animalsList = getAnimal();
+
+        if(animalsList.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal List not found");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(animalsList);
+    }
+
+
+    public List<AnimalDTO> getAnimal() {
         Iterable<Animal> animalIterable = animalRepository.findAll();
         List<AnimalDTO> animals = new ArrayList<>();
-        for (Animal a : animalIterable) {
+        for(Animal anim : animalIterable) {
             AnimalDTO animal = new AnimalDTO();
-            animal.setAnimalCode(a.getName() + "-" + a.getBreed() + "-" + a.getColor());
-            animal.setWeight(a.getWeight());
-            animal.setLenght(a.getLenght());
-            animal.setHeight(a.getHeight());
+            animal.setAnimalCode(anim.getName() + "-" + anim.getBreed() + "-" + anim.getColor());
+            animal.setName(anim.getPetName());
+            animal.setWeight(anim.getWeight());
+            animal.setLenght(anim.getLength());
+            animal.setHeight(anim.getHeight());
             animals.add(animal);
         }
-        if (animals.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal List Not found");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(animals);
+        return animals;
     }
+
 
     public ResponseEntity getAnimalById(String id) {
         Optional<Animal> animalOptional = animalRepository.findById(Long.valueOf(id));
-        //Optional<Animal> animalOptional = animalRepository.findById(animalid);
-        if (animalOptional.isPresent()) {
-            //if record was found
+        if(animalOptional.isPresent()) {
             Animal animalFound = animalOptional.get();
-            AnimalDTO animal = new AnimalDTO(animalFound.getId().toString(),
-                    animalFound.getName() + "-" + animalFound.getBreed() + "-" + animalFound.getColor(),
-                    animalFound.getWeight(), animalFound.getLenght(), animalFound.getHeight());
+            AnimalDTO animal = new AnimalDTO();
+            animal.setAnimalCode(animalFound.getName() + "-" + animalFound.getBreed() + "-" + animalFound.getColor());
+            animal.setWeight(animalFound.getWeight());
+            animal.setLenght(animalFound.getLength());
+            animal.setHeight(animalFound.getHeight());
             return ResponseEntity.status(HttpStatus.OK).body(animal);
         } else {
-            //if record wasn't found
-            String errorMessage = "animal with id " + id + " not found";
+            String errorMessage = "Person with id " + id + " not found";
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
     }
@@ -85,9 +93,9 @@ public class AnimalService {
     public AnimalDTO updateAnimal(String id, AnimalDTO animal){
         AnimalDTO ani = new AnimalDTO();
         int index = 0;
-        for(AnimalDTO anim : AnimalList){
+        for(AnimalDTO anim : animalDTOList){
             if(id.equalsIgnoreCase(anim.getId())){
-                AnimalList.set(index, animal);
+                animalDTOList.set(index, animal);
                 return animal;
             }
             index++;
@@ -98,7 +106,7 @@ public class AnimalService {
     private int findIndex(String id){
         int indexFound = -1;
         int index = 0;
-        for(AnimalDTO a : AnimalList){
+        for(AnimalDTO a : animalDTOList){
             if(id.equalsIgnoreCase(a.getId())){
                 return index;
             }
@@ -109,9 +117,9 @@ public class AnimalService {
 
     public String deleteAnimal(String id) {
         String message = "Animal with id " + id;
-        for (AnimalDTO ani : AnimalList) {
+        for (AnimalDTO ani : animalDTOList) {
             if (id.equalsIgnoreCase(ani.getId())) {
-                AnimalList.remove(ani);
+                animalDTOList.remove(ani);
                 return message + " Removed successfully";
             }
         }
