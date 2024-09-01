@@ -10,17 +10,20 @@ public class TemplateController {
 
     private final PersonService personService;
     private final AnimalService animalService;
+    private final BookService  bookService;
 
+
+    public TemplateController(PersonService personService, AnimalService animalService, BookService bookService) {
+        this.personService = personService;
+        this.animalService = animalService;
+        this.bookService = bookService;
+    }
 
     @GetMapping("/template")
     public String getTemplate(Model model) {
         return "template";
     }
 
-    public TemplateController(PersonService personService, AnimalService animalService) {
-        this.personService = personService;
-        this.animalService = animalService;
-    }
 
     @GetMapping("/people")
     public String getPeople(Model model) {
@@ -32,5 +35,10 @@ public class TemplateController {
     public String getAnimal(Model model) {
         model.addAttribute("animals", animalService.getAnimal());
         return "animal/list";
+    }
+    @GetMapping("/books")
+    public String getBookAndAuthor(Model model){
+        model.addAttribute("books", bookService.getBookAndAuthor());
+        return "book/list";
     }
 }
