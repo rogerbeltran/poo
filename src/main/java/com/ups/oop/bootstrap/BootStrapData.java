@@ -22,21 +22,27 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Person p1 = new Person();
-        p1.setPersonId("0998377188");
-        p1.setName("Luis");
-        p1.setLastName("García");
-        p1.setAge(38);
+        Person pe1 = new Person();
+        pe1.setPersonId("0998377188");
+        pe1.setName("Luis");
+        pe1.setLastName("García");
+        pe1.setAge(38);
 
-        Person p2 = new Person();
-        p2.setPersonId("0987311633");
-        p2.setName("Sandra");
-        p2.setLastName("Olivares");
-        p2.setAge(42);
-        p2.setAge(39);
-      
-        personRepository.save(p1);
-        personRepository.save(p2);
+        Person pe2 = new Person();
+        pe2.setPersonId("0987311633");
+        pe2.setName("Sandra");
+        pe2.setLastName("Olivares");
+        pe2.setAge(42);
+
+        Person pe3 = new Person();
+        pe3.setPersonId("0987311633");
+        pe3.setName("Juliana");
+        pe3.setLastName("Sanchez");
+        pe3.setAge(29);
+
+        personRepository.save(pe1);
+        personRepository.save(pe2);
+        personRepository.save(pe3);
 
         Animal a1 = new Animal();
         a1.setName("Lady");
