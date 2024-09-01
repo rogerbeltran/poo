@@ -3,7 +3,11 @@ package com.ups.oop.bootstrap;
 
 import com.ups.oop.dto.Person;
 import com.ups.oop.entity.Animal;
+import com.ups.oop.entity.Author;
+import com.ups.oop.entity.Book;
 import com.ups.oop.repository.AnimalRepository;
+import com.ups.oop.repository.AuthorRepository;
+import com.ups.oop.repository.BookRepository;
 import com.ups.oop.repository.PersonRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,13 +16,15 @@ import org.springframework.stereotype.Component;
 public class BootStrapData implements CommandLineRunner {
     private final PersonRepository personRepository;
     private final AnimalRepository animalRepository;
+    private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
-
-    public BootStrapData(PersonRepository personRepository, AnimalRepository animalRepository, AnimalRepository animalRepository1){
+    public BootStrapData(PersonRepository personRepository, AnimalRepository animalRepository, BookRepository bookRepository, AuthorRepository authorRepository) {
         this.personRepository = personRepository;
         this.animalRepository = animalRepository;
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
-
 
     @Override
     public void run(String... args) throws Exception {
@@ -76,8 +82,57 @@ public class BootStrapData implements CommandLineRunner {
         animalRepository.save(ani2);
         animalRepository.save(ani3);
 
+        Author author1 = new Author();
+        author1.setName("Lewis ");
+        author1.setLastName("Carroll");
+        authorRepository.save(author1);
+
+        Book book1 = new Book();
+        book1.setTitle("Alicia en el país de las maravillas");
+        book1.setEditorial("Macmillan Publishers");
+        book1.setAuthor(author1);
+        bookRepository.save(book1);
+
+        author1.getBooks().add(book1);
+        authorRepository.save(author1);
+
+        //2
+        Author author2 = new Author();
+        author2.setName("Gabriel");
+        author2.setLastName("García Márquez");
+        authorRepository.save(author2);
+
+        Book book2 = new Book();
+        book2.setTitle("Cien años de soledad");
+        book2.setEditorial("Editorial Sudamericana");
+        book2.setAuthor(author2);
+        bookRepository.save(book2);
+
+        author2.getBooks().add(book2);
+        authorRepository.save(author2);
+
+
+        //3
+
+        Author author3 = new Author();
+        author3.setName("Jane");
+        author3.setLastName("Austen");
+        authorRepository.save(author3);
+
+        //3
+        Book book3 = new Book();
+        book3.setTitle("Orgullo y prejuicio");
+        book3.setEditorial("T. Egerton");
+        book3.setAuthor(author3);
+        bookRepository.save(book3);
+
+        author3.getBooks().add(book3);
+        authorRepository.save(author3);
+
         System.out.println("--------------Started BootstrapData -------------");
         System.out.println("Number of Persons: " + personRepository.count());
         System.out.println("Number of Animals: " + animalRepository.count());
+        System.out.println("Number of Books: " + bookRepository.count());
+        System.out.println("Number of Authors: " + authorRepository.count());
     }
 }
