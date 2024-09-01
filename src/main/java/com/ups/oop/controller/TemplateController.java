@@ -9,20 +9,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TemplateController {
 
     private final PersonService personService;
+    private final AnimalService animalService;
 
-    public TemplateController(PersonService personService) {
-        this.personService = personService;
 
+    @GetMapping("/template")
+    public String getTemplate(Model model) {
+        return "template";
     }
 
-    @GetMapping("/templates")
-    public String getTemplate(Model model) {
-        return "templates";
+    public TemplateController(PersonService personService, AnimalService animalService) {
+        this.personService = personService;
+        this.animalService = animalService;
     }
 
     @GetMapping("/people")
     public String getPeople(Model model) {
         model.addAttribute("people", personService.getPeople());
         return "person/list";
+    }
+
+    @GetMapping("/animals")
+    public String getAnimal(Model model) {
+        model.addAttribute("animals", animalService.getAnimal());
+        return "animal/list";
     }
 }
